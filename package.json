@@ -1,7 +1,7 @@
 {
   "name": "iframe-storage",
   "version": "0.0.1",
-  "description": "iframe uses the storage of the parent page",
+  "description": "uses parent's storage",
   "license": "MIT",
   "repository": "",
   "author": {
@@ -10,8 +10,8 @@
     "url": ""
   },
   "files": [
-    "client.js",
-    "manager.js"
+    "ifrStorage.js",
+    "ifrStorageCli.js"
   ],
   "keywords": [
     "iframe",
@@ -19,5 +19,12 @@
     "sissionStorage",
     "safari",
     "block"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-modules-umd": "^7.12.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-uglify": "^3.0.2"
+  }
 }

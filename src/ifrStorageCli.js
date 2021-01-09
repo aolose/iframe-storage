@@ -1,9 +1,10 @@
 'use strict';
+
 function warp(target, storage, origin) {
     const sto = {}
     const msg = function (method, key, value) {
         const o = {
-            name: "proxyStorage",
+            name: "iframeStorage",
             storage: storage,
             method: method,
             key: key,
@@ -13,7 +14,6 @@ function warp(target, storage, origin) {
     }
     const o = {
         getItem(s) {
-            target.postMessage(msg("getItem", s), origin)
             return sto[s]
         },
         setItem(s, v) {
@@ -69,14 +69,7 @@ function warp(target, storage, origin) {
  * @param {boolean} [config.sessionStorage]      - true: proxy  sessionStorage , default true
  * @param {function} [config.when] - execute if return true ,empty means always execute,default empty
  */
-function proxyStorage(config) {
-    const ready = {
-        ready: function (fn) {
-            if ('function' === typeof fn) {
-                cfg.ready = fn
-            }
-        }
-    }
+export function init(config) {
     const cfg = {
         targetOrigin: "*",
         when: null,
@@ -84,10 +77,24 @@ function proxyStorage(config) {
         sessionStorage: true,
         scope: "",
         target: window.top,
-        ready: null
+        ready: null,
+        sync:null
     }
     Object.assign(cfg, config)
-    if ('function' === typeof config.when && !config.when()) {
+    const ready = {
+        ready: function (fn) {
+            if ('function' === typeof fn) {
+                cfg.ready = fn
+            }
+        },
+        sync:function (fn){
+            if(fn!==undefined){
+                cfg.sync=fn
+            }
+            cfg.target.postMessage(JSON.stringify({ type: "iframeStorage.sync"}),cfg.targetOrigin)
+        }
+    }
+    if ('function' === typeof cfg.when && !cfg.when()) {
         setTimeout(function () {
             if ('function' === typeof cfg.ready) cfg.ready()
         }, 0)
@@ -100,42 +107,41 @@ function proxyStorage(config) {
     const block = (e) => {
         return !e.data || Array.isArray(cfg.targetOrigin) && cfg.targetOrigin.indexOf(e.origin) === -1
     }
-    const onReady = function (e) {
+    function sync(e, fn) {
         if (block(e)) return;
         try {
             const msg = JSON.parse(e.data);
-            if (msg.type === "proxyStorage.sync") {
+            if (msg.type === "iframeStorage.sync") {
                 if (cfg.localStorage) {
                     Object.assign(storage.localStorage, msg.localStorage)
                 }
                 if (cfg.sessionStorage) {
                     Object.assign(storage.sessionStorage, msg.sessionStorage)
                 }
-                window.removeEventListener("message", onReady)
-                window.addEventListener("message", onSet)
-                if ('function' === typeof cfg.ready) cfg.ready()
+                if ('function' === typeof fn) {
+                    fn()
+                }
+                if ('function' === typeof cfg.sync) {
+                    cfg.sync()
+                }
             }
         } catch (e) {
         }
-
     }
-    const onSet = function (e) {
-        if (block(e)) return;
-        try {
-            const msg = JSON.parse(e.data);
-            if (msg.type === "proxyStorage.get") {
-                storage[msg.storage].setItem(msg.key, msg.value)
-            }
-        } catch (e) {
-        }
+    const onReady = function (e) {
+        sync(e, function () {
+            window.removeEventListener("message", onReady)
+            window.addEventListener("message", sync)
+            if ('function' === typeof cfg.ready) cfg.ready()
+        })
     }
     window.addEventListener("message", onReady)
     cfg.target.postMessage(JSON.stringify({
-        type: "proxyStorage.init",
+        type: "iframeStorage.init",
         scope: cfg.scope,
         localStorage: cfg.localStorage,
         sessionStorage: cfg.sessionStorage,
     }), cfg.targetOrigin)
+    return ready
 }
 
-module.exports = proxyStorage;

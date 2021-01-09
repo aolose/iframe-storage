@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<iframe src="./iframe.html"></iframe>
+<br/>
+<script src="../dist/ifrStorage.js"></script>
+<button id="a">show localStorage</button>
+<div id="i"></div>
+<script>
+    document.getElementById('a').onclick=function (){
+        document.getElementById('i').innerText=JSON.stringify(localStorage," "," ")
+    }
+</script>
+</body>
+</html>
