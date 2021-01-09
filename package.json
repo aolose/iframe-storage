@@ -1,0 +1,26 @@
+{
+  "name": "iframe-storage",
+  "version": "0.0.1",
+  "description": "proxy a iframe's storage  to it's parent's",
+  "license": "MIT",
+  "repository": "",
+  "author": {
+    "name": "Aolose",
+    "email": "anytable@gmail.com",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "files": [
+    "client.js",
+    "manager.js"
+  ],
+  "keywords": [
+    "iframe",
+    "localStorage",
+    "sissionStorage",
+    "safari",
+    "block"
+  ]
+}
