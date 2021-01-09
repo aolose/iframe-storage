@@ -46,6 +46,7 @@ init({scope:"demo"}).ready(function (){
 | targetOrigin | string丨array | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
 | sessionStorage | boolean | true | handle sessionStorage |
+| when | function | null | execute if return true ,empty means always execute |
 | ready | function | null | same as init().ready(fn) |
 
 
