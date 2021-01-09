@@ -1,16 +1,13 @@
 {
   "name": "iframe-storage",
   "version": "0.0.1",
-  "description": "proxy a iframe's storage  to it's parent's",
+  "description": "iframe uses the storage of the parent page",
   "license": "MIT",
   "repository": "",
   "author": {
     "name": "Aolose",
     "email": "anytable@gmail.com",
     "url": ""
-  },
-  "engines": {
-    "node": ">=0.10.0"
   },
   "files": [
     "client.js",
