@@ -40,6 +40,11 @@ function attach(s,cfg){
     }
     s.postMessage(JSON.stringify(o),"*")
 }
+
+/**
+ * use in top page
+ * @returns {{stop: stop}} remove all message Listener
+ */
 function proxyStorageManager(){
     const onMsg = function (e){
         try{
