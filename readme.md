@@ -41,7 +41,7 @@ init({scope:"demo"}).ready(function (){
 | name | type | default | desc |
 | ---- | ---- | --- |---- |
 | target | window |  window.top | use target's storage, default |
-| scope | string | null |  to isolate storage, empty means use parent's storage directly |
+| scope | string |  |  to isolate storage, empty means use parent's storage directly |
 | targetOrigin | string|array} | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
 | sessionStorage | boolean | true | handle sessionStorage |
