@@ -22,13 +22,14 @@ to fix some  local storage issues in iOS Safari. [link](https://stackoverflow.co
 ### usage
 top page
 ```
-import from './ifrStorage'
+import "iframe-storage/src/ifrStorage"
+
 ```
 
 
 iframe:
 ```
-import {init} from './ifrStorageCli'
+import {init} from "iframe-storage/src/ifrStorageCli"
 
 init({scope:"demo"}).ready(function (){
   localstorage.test=1  
@@ -45,8 +46,5 @@ init({scope:"demo"}).ready(function (){
 | targetOrigin | string丨array | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
 | sessionStorage | boolean | true | handle sessionStorage |
+| when | function | null | execute if return true ,empty means always execute |
 | ready | function | null | same as init().ready(fn) |
-
-
-
-

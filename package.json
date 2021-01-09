@@ -1,18 +1,13 @@
 {
   "name": "iframe-storage",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "uses parent's storage",
   "license": "MIT",
   "repository": "",
   "author": {
-    "name": "Aolose",
-    "email": "anytable@gmail.com",
-    "url": ""
+    "name": "anytable",
+    "email": "anytable@gmail.com"
   },
-  "files": [
-    "ifrStorage.js",
-    "ifrStorageCli.js"
-  ],
   "keywords": [
     "iframe storage",
     "safari iframe storage"
