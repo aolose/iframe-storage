@@ -1,2 +1,5 @@
 /.idea/
 iframe-storage.iml
+/yarn.lock
+/package-lock.json
+/node_modules/
