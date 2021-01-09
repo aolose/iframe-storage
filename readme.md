@@ -42,7 +42,7 @@ init({scope:"demo"}).ready(function (){
 | ---- | ---- | --- |---- |
 | target | window |  window.top | use target's storage, default |
 | scope | string |  |  to isolate storage, empty means use parent's storage directly |
-| targetOrigin | string|array} | * | postmessage's targetOrigin |
+| targetOrigin | string丨array | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
 | sessionStorage | boolean | true | handle sessionStorage |
 | ready | function | null | same as init().ready(fn) |
