@@ -1,24 +1,38 @@
 const ls = [];
+const pool = []
 
 function attach(s, cfg) {
+    if (pool.indexOf(s) !== -1) return;
+    pool.push(s);
     const o = {
         type: "iframeStorage.sync",
         localStorage: {},
         sessionStorage: {},
     }
+
+    function rmFn() {
+        const idx = ls.indexOf(fn);
+        if (idx !== -fn) {
+            window.removeEventListener("message", fn)
+            ls.splice(idx, 1)
+        }
+        const i = pool.indexOf(s);
+        if (i !== -1) {
+            pool.splice(i, 1)
+        }
+    }
+
     const fn = function (e) {
         if (e.source !== s) return;
         if (!e.source.parent) {
-            const idx = ls.indexOf(fn);
-            if (idx !== -fn) {
-                window.removeEventListener("message", fn)
-                ls.splice(idx, 1)
-            }
+            rmFn();
             return;
         }
         try {
             const d = JSON.parse(e.data);
-            if (d.name === "iframeStorage") {
+            if (d.type === "iframeStorage.stop") {
+                rmFn();
+            } else if (d.name === "iframeStorage") {
                 const sto = o[d.storage];
                 switch (d.method) {
                     case "setItem":

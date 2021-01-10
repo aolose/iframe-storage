@@ -14,7 +14,7 @@ function warp(target, storage, origin) {
     }
     const p = {
         getItem(s) {
-            if(!sto.hasOwnProperty(s))return null
+            if (!sto.hasOwnProperty(s)) return null
             return sto[s]
         },
         setItem(s, v) {
@@ -47,15 +47,15 @@ function warp(target, storage, origin) {
             }
         },
         set: function (obj, prop, value) {
-            if(p.hasOwnProperty(prop)){
-                obj[prop]=value
-            }else obj.setItem(prop, value)
+            if (p.hasOwnProperty(prop)) {
+                obj[prop] = value
+            } else obj.setItem(prop, value)
             return true;
         },
-        deleteProperty:function (obj, prop) {
+        deleteProperty: function (obj, prop) {
             if (obj.hasOwnProperty(prop)) {
                 delete obj[prop]
-            }else if(sto.hasOwnProperty(prop)){
+            } else if (sto.hasOwnProperty(prop)) {
                 obj.removeItem(prop)
             }
         }
@@ -81,6 +81,7 @@ function warp(target, storage, origin) {
  * @param {function} [config.when] - execute if return true ,empty means always execute,default empty
  */
 export function init(config) {
+    let done = 0;
     const cfg = {
         targetOrigin: "*",
         when: null,
@@ -89,7 +90,7 @@ export function init(config) {
         scope: "",
         target: window.top,
         ready: null,
-        sync:null
+        sync: null
     }
     Object.assign(cfg, config)
     const ready = {
@@ -98,11 +99,16 @@ export function init(config) {
                 cfg.ready = fn
             }
         },
-        sync:function (fn){
-            if(fn!==undefined){
-                cfg.sync=fn
+        stop: function () {
+            cfg.target.postMessage(JSON.stringify({
+                type: "iframeStorage.stop"
+            }), cfg.targetOrigin);
+        },
+        sync: function (fn) {
+            if (fn !== undefined) {
+                cfg.sync = fn
             }
-            cfg.target.postMessage(JSON.stringify({ type: "iframeStorage.sync"}),cfg.targetOrigin)
+            cfg.target.postMessage(JSON.stringify({type: "iframeStorage.sync"}), cfg.targetOrigin)
         }
     }
     if ('function' === typeof cfg.when && !cfg.when()) {
@@ -115,9 +121,11 @@ export function init(config) {
         localStorage: cfg.localStorage && warp(cfg.target, 'localStorage', cfg.targetOrigin),
         sessionStorage: cfg.sessionStorage && warp(cfg.target, 'sessionStorage', cfg.targetOrigin)
     }
-    function block(e){
+
+    function block(e) {
         return !e.data || Array.isArray(cfg.targetOrigin) && cfg.targetOrigin.indexOf(e.origin) === -1
     }
+
     function sync(e, fn) {
         if (block(e)) return;
         try {
@@ -139,20 +147,32 @@ export function init(config) {
         } catch (e) {
         }
     }
+
     function onReady(e) {
         sync(e, function () {
+            done = 1;
             window.removeEventListener("message", onReady)
             window.addEventListener("message", sync)
             if ('function' === typeof cfg.ready) cfg.ready()
         })
     }
+
     window.addEventListener("message", onReady)
-    cfg.target.postMessage(JSON.stringify({
-        type: "iframeStorage.init",
-        scope: cfg.scope,
-        localStorage: cfg.localStorage,
-        sessionStorage: cfg.sessionStorage,
-    }), cfg.targetOrigin)
+
+    function wait() {
+        if (done) return;
+        requestAnimationFrame(function () {
+            cfg.target.postMessage(JSON.stringify({
+                type: "iframeStorage.init",
+                scope: cfg.scope,
+                localStorage: cfg.localStorage,
+                sessionStorage: cfg.sessionStorage,
+            }), cfg.targetOrigin);
+            wait()
+        })
+    }
+
+    wait();
     return ready
 }
 
