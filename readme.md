@@ -31,11 +31,11 @@ npm i iframe-storage
 #### or insert directly 
 ##### top page,make sure insert it before your iframe
 ```
-<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.5/dist/ifrStorage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.6/dist/ifrStorage.js"></script>
 ```
 ##### iframe
 ```
-<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.5/dist/ifrStorageCli.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.6/dist/ifrStorageCli.js"></script>
 ```
 
 
