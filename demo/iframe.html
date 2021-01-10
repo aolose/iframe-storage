@@ -8,7 +8,15 @@
 </head>
 <body>
 <label for="a">Name</label><input id="a">
-<script src="../dist/ifrStorageCli.js"></script>
+<button id="b">show localStorage</button>
+<div id="i"></div>
+<script>
+    var l = localStorage
+    document.getElementById('b').onclick = function () {
+        document.getElementById('i').innerText = JSON.stringify(l, " ", " ")
+    }
+</script>
+<script src="ifrStorageCli.js"></script>
 <script>
     var a = document.getElementById('a');
     ifrStorageCli.init({scope: "iframeStorage"}).ready(function () {

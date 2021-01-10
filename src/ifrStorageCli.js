@@ -104,7 +104,7 @@ export function init(config) {
         localStorage: cfg.localStorage && warp(cfg.target, 'localStorage', cfg.targetOrigin),
         sessionStorage: cfg.sessionStorage && warp(cfg.target, 'sessionStorage', cfg.targetOrigin)
     }
-    const block = (e) => {
+    function block(e){
         return !e.data || Array.isArray(cfg.targetOrigin) && cfg.targetOrigin.indexOf(e.origin) === -1
     }
     function sync(e, fn) {
@@ -128,7 +128,7 @@ export function init(config) {
         } catch (e) {
         }
     }
-    const onReady = function (e) {
+    function onReady(e) {
         sync(e, function () {
             window.removeEventListener("message", onReady)
             window.addEventListener("message", sync)
