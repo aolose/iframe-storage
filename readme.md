@@ -24,6 +24,22 @@ scan to visit the [demo](https://aolose.github.io/ifrstordemo/index.html)
 -----------------------------------------
 ```
 
+### install
+```
+npm i iframe-storage
+```
+#### or insert directly 
+##### top page,make sure insert it before your iframe
+```
+<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.5/dist/ifrStorage.js"></script>
+```
+##### iframe
+```
+<script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.5/dist/ifrStorageCli.js"></script>
+```
+
+
+
 ### usage
 top page
 ```
@@ -46,7 +62,7 @@ init({scope:"demo"}).ready(function (){
 
 | name | type | default | desc |
 | ---- | ---- | --- |---- |
-| target | window |  window.top | use target's storage, default |
+| target | window |  window.top | use target's storage |
 | scope | string |  |  to isolate storage, empty means use parent's storage directly |
 | targetOrigin | string丨array | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
