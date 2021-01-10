@@ -62,7 +62,7 @@ init({scope:"demo"}).ready(function (){
 
 | name | type | default | desc |
 | ---- | ---- | --- |---- |
-| target | window |  window.top | use target's storage, default |
+| target | window |  window.top | use target's storage |
 | scope | string |  |  to isolate storage, empty means use parent's storage directly |
 | targetOrigin | string丨array | * | postmessage's targetOrigin |
 | localStorage | boolean | true | handle localStorage |
