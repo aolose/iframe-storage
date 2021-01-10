@@ -29,7 +29,7 @@ scan to visit the [demo](https://aolose.github.io/ifrstordemo/index.html)
 npm i iframe-storage
 ```
 #### or insert directly 
-##### top page,make sure insert it before your iframe
+##### top page, ~~make sure insert it before your iframe~~.  any where is ok
 ```
 <script src="https://cdn.jsdelivr.net/npm/iframe-storage@0.0.6/dist/ifrStorage.js"></script>
 ```
