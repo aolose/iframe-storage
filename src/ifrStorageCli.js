@@ -12,8 +12,9 @@ function warp(target, storage, origin) {
         }
         return JSON.stringify(o)
     }
-    const o = {
+    const o = Object.create({
         getItem(s) {
+            if(!sto.hasOwnProperty(s))return null
             return sto[s]
         },
         setItem(s, v) {
@@ -28,7 +29,7 @@ function warp(target, storage, origin) {
             target.postMessage(msg("clear"), origin)
             Object.keys(sto).forEach(k => delete sto[k])
         }
-    }
+    })
     const store = new Proxy(o, {
         get: function (obj, prop) {
             switch (prop) {
@@ -47,6 +48,11 @@ function warp(target, storage, origin) {
         set: function (obj, prop, value) {
             obj.setItem(prop, value)
             return true;
+        },
+        deleteProperty:function (obj, prop) {
+            if (obj.hasOwnProperty(prop)) {
+                obj.removeItem(prop)
+            }
         }
     });
     Object.defineProperty(window, storage, {
