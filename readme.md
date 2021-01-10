@@ -4,6 +4,12 @@ proxy your iframe storage to parent.
 
 to fix some  local storage issues in iOS Safari. [link](https://stackoverflow.com/questions/52730903/persistent-local-storage-in-ios-safari-issues/52897329)
 
+
+
+
+[demo](https://aolose.github.io/ifrstordemo/index.html) [!demo](q.png)
+
+
 #### How it work:
 
 ```
