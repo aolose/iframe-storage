@@ -1,6 +1,6 @@
 'use strict';
 
-function warp(target, storage, origin) {
+function wrap(target, storage, origin) {
     const sto = {}
     const msg = function (method, key, value) {
         const o = {
@@ -118,8 +118,8 @@ export function init(config) {
         return ready;
     }
     const storage = {
-        localStorage: cfg.localStorage && warp(cfg.target, 'localStorage', cfg.targetOrigin),
-        sessionStorage: cfg.sessionStorage && warp(cfg.target, 'sessionStorage', cfg.targetOrigin)
+        localStorage: cfg.localStorage && wrap(cfg.target, 'localStorage', cfg.targetOrigin),
+        sessionStorage: cfg.sessionStorage && wrap(cfg.target, 'sessionStorage', cfg.targetOrigin)
     }
 
     function block(e) {
